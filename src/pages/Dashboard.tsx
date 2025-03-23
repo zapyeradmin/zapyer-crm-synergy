@@ -1,10 +1,19 @@
-
 import React from 'react';
 import DashboardCard from '@/components/dashboard/DashboardCard';
 import MetricCard from '@/components/dashboard/MetricCard';
 import RecentActivity from '@/components/dashboard/RecentActivity';
 import { Users, DollarSign, TrendingUp, Calendar, BarChart4 } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { 
+  AreaChart, 
+  Area, 
+  BarChart, 
+  Bar,
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  ResponsiveContainer 
+} from 'recharts';
 
 // Sample data for charts
 const salesData = [
@@ -146,11 +155,9 @@ const Dashboard = () => {
                     }}
                     formatter={(value) => [value, 'Deals']}
                   />
-                  <Area
-                    type="monotone"
+                  <Bar
                     dataKey="value"
                     fill="#8884d8"
-                    stroke="#8884d8"
                   />
                 </BarChart>
               </ResponsiveContainer>
