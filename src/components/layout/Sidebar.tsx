@@ -51,7 +51,7 @@ const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "flex flex-col h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out z-30 shadow-sm",
+        "flex flex-col h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out z-30 shadow-md",
         collapsed ? "w-[70px]" : "w-[240px]"
       )}
     >
@@ -86,7 +86,7 @@ const Sidebar = () => {
                         )
                       }
                     >
-                      <item.icon className={cn("h-5 w-5", collapsed ? "mx-0" : "mr-3")} />
+                      <item.icon className="h-5 w-5 mr-3 flex-shrink-0" />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
                   </TooltipTrigger>
@@ -124,7 +124,7 @@ const Sidebar = () => {
                           )
                         }
                       >
-                        <item.icon className={cn("h-5 w-5", collapsed ? "mx-0" : "mr-3")} />
+                        <item.icon className="h-5 w-5 mr-3 flex-shrink-0" />
                         {!collapsed && <span>{item.title}</span>}
                       </NavLink>
                     </TooltipTrigger>
@@ -148,8 +148,14 @@ const Sidebar = () => {
           onClick={toggleSidebar}
           className="w-full justify-center text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent"
         >
-          {collapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
-          {!collapsed && <span className="ml-2">Recolher</span>}
+          {collapsed ? (
+            <ChevronRight className="h-5 w-5" />
+          ) : (
+            <>
+              <ChevronLeft className="h-5 w-5 mr-2" />
+              <span>Recolher</span>
+            </>
+          )}
         </Button>
       </div>
     </aside>
