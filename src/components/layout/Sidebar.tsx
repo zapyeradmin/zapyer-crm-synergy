@@ -51,23 +51,23 @@ const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "flex flex-col h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out z-30",
+        "flex flex-col h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 ease-in-out z-30 shadow-sm",
         collapsed ? "w-[70px]" : "w-[240px]"
       )}
     >
-      <div className="flex items-center h-16 px-4 border-b border-sidebar-border">
+      <div className="flex items-center justify-center h-16 px-4 border-b border-sidebar-border">
         {!collapsed && (
           <h1 className="text-xl font-semibold text-sidebar-foreground tracking-tight">
             Zapyer CRM
           </h1>
         )}
         {collapsed && (
-          <span className="mx-auto text-xl font-semibold text-sidebar-foreground">Z</span>
+          <span className="mx-auto text-xl font-bold text-sidebar-foreground">Z</span>
         )}
       </div>
       
       <div className="flex-1 overflow-auto py-4">
-        <nav className="space-y-6 px-2">
+        <nav className="space-y-4 px-2">
           <div className="space-y-1">
             {mainNavItems.map((item) => (
               <TooltipProvider key={item.title} delayDuration={0}>
@@ -77,21 +77,21 @@ const Sidebar = () => {
                       to={item.path}
                       className={({ isActive }) =>
                         cn(
-                          "flex items-center px-3 py-2 rounded-md text-sm transition-colors",
+                          "flex items-center px-3 py-2.5 rounded-md text-sm font-medium transition-colors",
                           "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                           isActive
                             ? "bg-sidebar-accent text-sidebar-accent-foreground"
                             : "text-sidebar-foreground",
-                          collapsed && "justify-center"
+                          collapsed ? "justify-center" : ""
                         )
                       }
                     >
-                      <item.icon className={cn("h-5 w-5", collapsed ? "mx-0" : "mr-2")} />
+                      <item.icon className={cn("h-5 w-5", collapsed ? "mx-0" : "mr-3")} />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
                   </TooltipTrigger>
                   {collapsed && (
-                    <TooltipContent side="right">
+                    <TooltipContent side="right" className="bg-popover text-popover-foreground border-border">
                       <p>{item.title}</p>
                     </TooltipContent>
                   )}
@@ -101,7 +101,12 @@ const Sidebar = () => {
           </div>
           
           <div className="pt-4 border-t border-sidebar-border">
-            <div className="space-y-1">
+            <p className={cn("px-3 py-1 text-xs font-semibold text-sidebar-foreground/50 uppercase", 
+                           collapsed && "text-center"
+            )}>
+              {!collapsed && "Sistema"}
+            </p>
+            <div className="space-y-1 mt-2">
               {secondaryNavItems.map((item) => (
                 <TooltipProvider key={item.title} delayDuration={0}>
                   <Tooltip>
@@ -110,7 +115,7 @@ const Sidebar = () => {
                         to={item.path}
                         className={({ isActive }) =>
                           cn(
-                            "flex items-center px-3 py-2 rounded-md text-sm transition-colors",
+                            "flex items-center px-3 py-2.5 rounded-md text-sm font-medium transition-colors",
                             "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                             isActive
                               ? "bg-sidebar-accent text-sidebar-accent-foreground"
@@ -119,12 +124,12 @@ const Sidebar = () => {
                           )
                         }
                       >
-                        <item.icon className={cn("h-5 w-5", collapsed ? "mx-0" : "mr-2")} />
+                        <item.icon className={cn("h-5 w-5", collapsed ? "mx-0" : "mr-3")} />
                         {!collapsed && <span>{item.title}</span>}
                       </NavLink>
                     </TooltipTrigger>
                     {collapsed && (
-                      <TooltipContent side="right">
+                      <TooltipContent side="right" className="bg-popover text-popover-foreground border-border">
                         <p>{item.title}</p>
                       </TooltipContent>
                     )}
@@ -144,6 +149,7 @@ const Sidebar = () => {
           className="w-full justify-center text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent"
         >
           {collapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+          {!collapsed && <span className="ml-2">Recolher</span>}
         </Button>
       </div>
     </aside>
