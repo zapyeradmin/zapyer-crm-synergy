@@ -1,97 +1,90 @@
 
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-// Mock data for recent activities
 const activities = [
   {
     id: 1,
     user: {
-      name: 'John Doe',
+      name: 'João Silva',
       avatar: '',
-      initials: 'JD',
+      initials: 'JS',
     },
-    action: 'Added a new contact',
-    target: 'Sarah Johnson',
-    time: '2 hours ago',
+    action: 'criou um novo contato',
+    target: 'Maria Oliveira',
+    time: 'há 10 minutos',
   },
   {
     id: 2,
     user: {
-      name: 'Emma Wilson',
+      name: 'Ana Santos',
       avatar: '',
-      initials: 'EW',
+      initials: 'AS',
     },
-    action: 'Closed deal',
-    target: 'Project Phoenix',
-    time: '4 hours ago',
+    action: 'atualizou o negócio',
+    target: 'Implementação de Software SaaS',
+    time: 'há 25 minutos',
   },
   {
     id: 3,
     user: {
-      name: 'Robert Chen',
+      name: 'Carlos Ferreira',
       avatar: '',
-      initials: 'RC',
+      initials: 'CF',
     },
-    action: 'Updated opportunity',
-    target: 'Tech Innovations',
-    time: 'Yesterday',
+    action: 'programou uma reunião com',
+    target: 'Tech Innovations Brasil',
+    time: 'há 1 hora',
   },
   {
     id: 4,
     user: {
-      name: 'Lisa Taylor',
+      name: 'Luísa Pereira',
       avatar: '',
-      initials: 'LT',
+      initials: 'LP',
     },
-    action: 'Scheduled meeting with',
-    target: 'Michael Scott',
-    time: 'Yesterday',
+    action: 'completou a tarefa',
+    target: 'Enviar proposta comercial',
+    time: 'há 2 horas',
   },
   {
     id: 5,
     user: {
-      name: 'David Kim',
+      name: 'Bruno Costa',
       avatar: '',
-      initials: 'DK',
+      initials: 'BC',
     },
-    action: 'Created task',
-    target: 'Q4 Budget Review',
-    time: '2 days ago',
+    action: 'adicionou uma nota ao',
+    target: 'Projeto de Desenvolvimento Web',
+    time: 'há 3 horas',
   },
 ];
 
 const RecentActivity = () => {
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-medium">Recent Activity</CardTitle>
+    <Card>
+      <CardHeader>
+        <CardTitle>Atividade Recente</CardTitle>
+        <CardDescription>As ações mais recentes em seu CRM</CardDescription>
       </CardHeader>
-      <CardContent className="p-0">
-        <div className="space-y-0">
-          {activities.map((activity, index) => (
-            <React.Fragment key={activity.id}>
-              <div className="flex items-start p-4 hover:bg-muted/50 transition-colors">
-                <Avatar className="h-9 w-9 mr-4">
-                  <AvatarImage src={activity.user.avatar} alt={activity.user.name} />
-                  <AvatarFallback>{activity.user.initials}</AvatarFallback>
-                </Avatar>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">
-                    <span className="font-semibold">{activity.user.name}</span>{' '}
-                    {activity.action}{' '}
-                    <span className="font-semibold">{activity.target}</span>
-                  </p>
-                  <p className="text-sm text-muted-foreground">{activity.time}</p>
-                </div>
+      <CardContent>
+        <div className="space-y-4">
+          {activities.map((activity) => (
+            <div key={activity.id} className="flex items-start gap-3 pb-3 border-b last:border-0 last:pb-0">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={activity.user.avatar} alt={activity.user.name} />
+                <AvatarFallback className="text-xs">{activity.user.initials}</AvatarFallback>
+              </Avatar>
+              <div className="space-y-1">
+                <p className="text-sm">
+                  <span className="font-medium">{activity.user.name}</span>{' '}
+                  {activity.action}{' '}
+                  <span className="font-medium">{activity.target}</span>
+                </p>
+                <p className="text-xs text-muted-foreground">{activity.time}</p>
               </div>
-              {index < activities.length - 1 && (
-                <div className="pl-[69px] pr-4">
-                  <div className="h-px bg-border" />
-                </div>
-              )}
-            </React.Fragment>
+            </div>
           ))}
         </div>
       </CardContent>

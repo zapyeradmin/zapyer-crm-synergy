@@ -1,3 +1,4 @@
+
 import React from 'react';
 import DashboardCard from '@/components/dashboard/DashboardCard';
 import MetricCard from '@/components/dashboard/MetricCard';
@@ -15,23 +16,23 @@ import {
   ResponsiveContainer 
 } from 'recharts';
 
-// Sample data for charts
+// Dados de exemplo para os gráficos
 const salesData = [
   { name: 'Jan', value: 4000 },
-  { name: 'Feb', value: 3000 },
+  { name: 'Fev', value: 3000 },
   { name: 'Mar', value: 5000 },
-  { name: 'Apr', value: 4000 },
-  { name: 'May', value: 7000 },
+  { name: 'Abr', value: 4000 },
+  { name: 'Mai', value: 7000 },
   { name: 'Jun', value: 6000 },
   { name: 'Jul', value: 8000 },
 ];
 
 const dealsByStageData = [
-  { name: 'Qualified', value: 12 },
-  { name: 'Meeting', value: 19 },
-  { name: 'Proposal', value: 8 },
-  { name: 'Negotiation', value: 5 },
-  { name: 'Closed Won', value: 16 },
+  { name: 'Qualificado', value: 12 },
+  { name: 'Reunião', value: 19 },
+  { name: 'Proposta', value: 8 },
+  { name: 'Negociação', value: 5 },
+  { name: 'Fechado', value: 16 },
 ];
 
 const Dashboard = () => {
@@ -39,41 +40,41 @@ const Dashboard = () => {
     <div className="space-y-6 animate-slide-in-bottom">
       <div>
         <h1 className="text-2xl font-bold tracking-tight mb-2">Dashboard</h1>
-        <p className="text-muted-foreground">Overview of your CRM performance</p>
+        <p className="text-muted-foreground">Visão geral do desempenho do seu CRM</p>
       </div>
       
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <MetricCard
-          title="Total Contacts"
-          value="2,567"
+          title="Total de Contatos"
+          value="2.567"
           change={12}
-          description="vs last month"
+          description="vs mês anterior"
           icon={<Users className="h-4 w-4" />}
           className="appear-delay-1"
         />
         
         <MetricCard
-          title="Open Deals"
-          value="$127,490"
+          title="Negócios Abertos"
+          value="R$ 127.490"
           change={-3}
-          description="vs last month"
+          description="vs mês anterior"
           icon={<DollarSign className="h-4 w-4" />}
           className="appear-delay-1"
         />
         
         <MetricCard
-          title="Conversion Rate"
-          value="24.8%"
+          title="Taxa de Conversão"
+          value="24,8%"
           change={7}
-          description="vs last month"
+          description="vs mês anterior"
           icon={<TrendingUp className="h-4 w-4" />}
           className="appear-delay-2"
         />
         
         <MetricCard
-          title="Meetings"
+          title="Reuniões"
           value="16"
-          description="this week"
+          description="esta semana"
           icon={<Calendar className="h-4 w-4" />}
           className="appear-delay-2"
         />
@@ -81,8 +82,8 @@ const Dashboard = () => {
       
       <div className="grid gap-6 md:grid-cols-7">
         <DashboardCard
-          title="Revenue Forecast"
-          description="Monthly projection"
+          title="Previsão de Receita"
+          description="Projeção mensal"
           className="md:col-span-4 appear-delay-2"
         >
           <div className="h-[300px] w-full">
@@ -108,7 +109,7 @@ const Dashboard = () => {
                   tick={{ fontSize: 12 }} 
                   tickLine={false}
                   axisLine={{ stroke: '#e2e8f0', strokeWidth: 1 }}
-                  tickFormatter={(value) => `$${value}`}
+                  tickFormatter={(value) => `R$ ${value}`}
                 />
                 <Tooltip 
                   contentStyle={{ 
@@ -116,7 +117,7 @@ const Dashboard = () => {
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                     border: 'none',
                   }}
-                  formatter={(value) => [`$${value}`, 'Revenue']}
+                  formatter={(value) => [`R$ ${value}`, 'Receita']}
                 />
                 <Area
                   type="monotone"
@@ -131,7 +132,7 @@ const Dashboard = () => {
         </DashboardCard>
         
         <div className="md:col-span-3 space-y-6 appear-delay-3">
-          <DashboardCard title="Deals by Stage">
+          <DashboardCard title="Negócios por Estágio">
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
@@ -153,7 +154,7 @@ const Dashboard = () => {
                       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
                       border: 'none',
                     }}
-                    formatter={(value) => [value, 'Deals']}
+                    formatter={(value) => [value, 'Negócios']}
                   />
                   <Bar
                     dataKey="value"
@@ -169,45 +170,45 @@ const Dashboard = () => {
       <div className="grid gap-6 md:grid-cols-2 appear-delay-3">
         <RecentActivity />
         
-        <DashboardCard title="Upcoming Tasks">
+        <DashboardCard title="Tarefas Próximas">
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-3 border-b">
               <div>
-                <p className="font-medium">Follow up with Tech Innovations</p>
-                <p className="text-sm text-muted-foreground">Due in 2 days</p>
+                <p className="font-medium">Acompanhamento Tech Innovations</p>
+                <p className="text-sm text-muted-foreground">Vence em 2 dias</p>
               </div>
               <span className="text-xs bg-blue-100 text-blue-800 dark:bg-blue-800/20 dark:text-blue-300 px-2 py-1 rounded-full">
-                Call
+                Ligação
               </span>
             </div>
             
             <div className="flex items-center justify-between pb-3 border-b">
               <div>
-                <p className="font-medium">Prepare project proposal</p>
-                <p className="text-sm text-muted-foreground">Due tomorrow</p>
+                <p className="font-medium">Preparar proposta de projeto</p>
+                <p className="text-sm text-muted-foreground">Vence amanhã</p>
               </div>
               <span className="text-xs bg-purple-100 text-purple-800 dark:bg-purple-800/20 dark:text-purple-300 px-2 py-1 rounded-full">
-                Document
+                Documento
               </span>
             </div>
             
             <div className="flex items-center justify-between pb-3 border-b">
               <div>
-                <p className="font-medium">Sales meeting with ABC Corp</p>
-                <p className="text-sm text-muted-foreground">Due in 3 days</p>
+                <p className="font-medium">Reunião de vendas com ABC Corp</p>
+                <p className="text-sm text-muted-foreground">Vence em 3 dias</p>
               </div>
               <span className="text-xs bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-300 px-2 py-1 rounded-full">
-                Meeting
+                Reunião
               </span>
             </div>
             
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium">Quarterly review preparation</p>
-                <p className="text-sm text-muted-foreground">Due in 5 days</p>
+                <p className="font-medium">Preparação para revisão trimestral</p>
+                <p className="text-sm text-muted-foreground">Vence em 5 dias</p>
               </div>
               <span className="text-xs bg-yellow-100 text-yellow-800 dark:bg-yellow-800/20 dark:text-yellow-300 px-2 py-1 rounded-full">
-                Planning
+                Planejamento
               </span>
             </div>
           </div>

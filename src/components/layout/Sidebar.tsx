@@ -11,7 +11,9 @@ import {
   ChevronRight, 
   BarChart4,
   MessageSquare,
-  ClipboardList
+  ClipboardList,
+  UserCog,
+  Receipt
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -25,16 +27,18 @@ type NavItem = {
 
 const mainNavItems: NavItem[] = [
   { title: 'Dashboard', icon: LayoutDashboard, path: '/' },
-  { title: 'Contacts', icon: Users, path: '/contacts' },
-  { title: 'Deals', icon: DollarSign, path: '/deals' },
-  { title: 'Calendar', icon: Calendar, path: '/calendar' },
-  { title: 'Tasks', icon: ClipboardList, path: '/tasks' },
+  { title: 'Contatos', icon: Users, path: '/contacts' },
+  { title: 'Negócios', icon: DollarSign, path: '/deals' },
+  { title: 'Calendário', icon: Calendar, path: '/calendar' },
+  { title: 'Tarefas', icon: ClipboardList, path: '/tasks' },
+  { title: 'Finanças', icon: Receipt, path: '/finances' },
+  { title: 'Usuários', icon: UserCog, path: '/users' },
 ];
 
 const secondaryNavItems: NavItem[] = [
-  { title: 'Reports', icon: BarChart4, path: '/reports' },
-  { title: 'Messages', icon: MessageSquare, path: '/messages' },
-  { title: 'Settings', icon: Settings, path: '/settings' },
+  { title: 'Relatórios', icon: BarChart4, path: '/reports' },
+  { title: 'Mensagens', icon: MessageSquare, path: '/messages' },
+  { title: 'Configurações', icon: Settings, path: '/settings' },
 ];
 
 const Sidebar = () => {
