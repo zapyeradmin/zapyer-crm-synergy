@@ -86,8 +86,9 @@ const Sidebar = () => {
                         )
                       }
                     >
-                      <item.icon className="h-5 w-5 mr-3 flex-shrink-0" />
-                      {!collapsed && <span>{item.title}</span>}
+                      {/* Swap the order: text first, then icon */}
+                      {!collapsed && <span className="mr-3">{item.title}</span>}
+                      <item.icon className="h-5 w-5 flex-shrink-0" />
                     </NavLink>
                   </TooltipTrigger>
                   {collapsed && (
@@ -124,8 +125,9 @@ const Sidebar = () => {
                           )
                         }
                       >
-                        <item.icon className="h-5 w-5 mr-3 flex-shrink-0" />
-                        {!collapsed && <span>{item.title}</span>}
+                        {/* Swap the order: text first, then icon */}
+                        {!collapsed && <span className="mr-3">{item.title}</span>}
+                        <item.icon className="h-5 w-5 flex-shrink-0" />
                       </NavLink>
                     </TooltipTrigger>
                     {collapsed && (
@@ -152,8 +154,9 @@ const Sidebar = () => {
             <ChevronRight className="h-5 w-5" />
           ) : (
             <>
-              <ChevronLeft className="h-5 w-5 mr-2" />
-              <span>Recolher</span>
+              {/* Swap the order: text first, then icon */}
+              <span className="mr-2">Recolher</span>
+              <ChevronLeft className="h-5 w-5" />
             </>
           )}
         </Button>
