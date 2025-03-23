@@ -13,9 +13,6 @@ import Tasks from "./pages/Tasks";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
-// Need to install required package for drag and drop
-<lov-add-dependency>@hello-pangea/dnd@16.3.0</lov-add-dependency>
-
 const queryClient = new QueryClient();
 
 const App = () => (
