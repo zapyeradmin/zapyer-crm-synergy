@@ -10,8 +10,9 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Clock, DollarSign, MoreHorizontal, Plus } from 'lucide-react';
+import { Clock, DollarSign, MoreHorizontal, Plus, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from '@/components/ui/use-toast';
 
 // Sample data for deal stages and deals
 const initialStages = [
@@ -28,6 +29,7 @@ const initialStages = [
           name: 'John Smith',
           avatar: '',
           initials: 'JS',
+          phone: '+1 (555) 123-4567', // Adicionado número de telefone
         },
         dueDate: '2023-10-20',
       },
@@ -40,6 +42,7 @@ const initialStages = [
           name: 'Sarah Johnson',
           avatar: '',
           initials: 'SJ',
+          phone: '+1 (555) 234-5678', // Adicionado número de telefone
         },
         dueDate: '2023-10-25',
       },
@@ -58,6 +61,7 @@ const initialStages = [
           name: 'Emily Davis',
           avatar: '',
           initials: 'ED',
+          phone: '+1 (555) 456-7890', // Adicionado número de telefone
         },
         dueDate: '2023-10-18',
       },
@@ -76,6 +80,7 @@ const initialStages = [
           name: 'Lisa Wang',
           avatar: '',
           initials: 'LW',
+          phone: '+1 (555) 678-9012', // Adicionado número de telefone
         },
         dueDate: '2023-10-30',
       },
@@ -94,6 +99,7 @@ const initialStages = [
           name: 'Michael Chen',
           avatar: '',
           initials: 'MC',
+          phone: '+1 (555) 345-6789', // Adicionado número de telefone
         },
         dueDate: '2023-10-15',
       },
@@ -112,6 +118,7 @@ const initialStages = [
           name: 'David Kim',
           avatar: '',
           initials: 'DK',
+          phone: '+1 (555) 567-8901', // Adicionado número de telefone
         },
         dueDate: '2023-10-10',
       },
@@ -169,6 +176,18 @@ const DealPipeline = () => {
     setStages(newStages);
   };
 
+  const handleWhatsAppClick = (phone: string) => {
+    // Remove non-numeric characters from phone number
+    const formattedPhone = phone.replace(/\D/g, '');
+    // Open WhatsApp link in a new tab
+    window.open(`https://wa.me/${formattedPhone}`, '_blank');
+    
+    toast({
+      title: "WhatsApp",
+      description: `Abrindo WhatsApp para ${phone}`,
+    });
+  };
+
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="flex space-x-4 overflow-x-auto pb-6 px-2">
@@ -209,19 +228,31 @@ const DealPipeline = () => {
                             <div className="p-3">
                               <div className="flex items-center justify-between mb-2">
                                 <div className="text-sm font-medium">{deal.title}</div>
-                                <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                                      <MoreHorizontal className="h-4 w-4" />
-                                      <span className="sr-only">Actions</span>
-                                    </Button>
-                                  </DropdownMenuTrigger>
-                                  <DropdownMenuContent align="end" className="w-[160px]">
-                                    <DropdownMenuItem>View details</DropdownMenuItem>
-                                    <DropdownMenuItem>Edit deal</DropdownMenuItem>
-                                    <DropdownMenuItem>Delete deal</DropdownMenuItem>
-                                  </DropdownMenuContent>
-                                </DropdownMenu>
+                                <div className="flex items-center gap-1">
+                                  <Button 
+                                    variant="outline" 
+                                    size="icon" 
+                                    className="h-7 w-7 bg-green-500 hover:bg-green-600 text-white"
+                                    onClick={() => handleWhatsAppClick(deal.contact.phone)}
+                                    title="Enviar mensagem via WhatsApp"
+                                  >
+                                    <MessageSquare className="h-3.5 w-3.5" />
+                                    <span className="sr-only">WhatsApp</span>
+                                  </Button>
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                      <Button variant="ghost" size="icon" className="h-7 w-7">
+                                        <MoreHorizontal className="h-4 w-4" />
+                                        <span className="sr-only">Actions</span>
+                                      </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end" className="w-[160px]">
+                                      <DropdownMenuItem>View details</DropdownMenuItem>
+                                      <DropdownMenuItem>Edit deal</DropdownMenuItem>
+                                      <DropdownMenuItem>Delete deal</DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                  </DropdownMenu>
+                                </div>
                               </div>
                               
                               <div className="text-xs text-muted-foreground mb-3">{deal.company}</div>

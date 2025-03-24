@@ -25,7 +25,8 @@ import {
   DialogTrigger 
 } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Search, MoreHorizontal, Plus, Filter } from 'lucide-react';
+import { Search, MoreHorizontal, Plus, Filter, MessageSquare } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 
 // Sample data for contacts
 const contacts = [
@@ -105,6 +106,18 @@ const ContactList = () => {
     contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     contact.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleWhatsAppClick = (phone: string) => {
+    // Remove non-numeric characters from phone number
+    const formattedPhone = phone.replace(/\D/g, '');
+    // Open WhatsApp link in a new tab
+    window.open(`https://wa.me/${formattedPhone}`, '_blank');
+    
+    toast({
+      title: "WhatsApp",
+      description: `Abrindo WhatsApp para ${phone}`,
+    });
+  };
 
   return (
     <div className="space-y-4">
@@ -206,19 +219,31 @@ const ContactList = () => {
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal className="h-4 w-4" />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>View details</DropdownMenuItem>
-                      <DropdownMenuItem>Edit contact</DropdownMenuItem>
-                      <DropdownMenuItem>Delete contact</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <div className="flex justify-end gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="icon" 
+                      className="h-8 w-8 bg-green-500 hover:bg-green-600 text-white"
+                      onClick={() => handleWhatsAppClick(contact.phone)}
+                      title="Enviar mensagem via WhatsApp"
+                    >
+                      <MessageSquare className="h-4 w-4" />
+                      <span className="sr-only">WhatsApp</span>
+                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>View details</DropdownMenuItem>
+                        <DropdownMenuItem>Edit contact</DropdownMenuItem>
+                        <DropdownMenuItem>Delete contact</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

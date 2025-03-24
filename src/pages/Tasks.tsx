@@ -12,8 +12,9 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CheckCircle2, Clock, Plus, Star, User, CalendarRange } from 'lucide-react';
+import { CheckCircle2, Clock, Plus, Star, User, CalendarRange, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from '@/components/ui/use-toast';
 
 // Sample data for tasks
 const initialTasks = [
@@ -26,6 +27,7 @@ const initialTasks = [
     due: '2023-10-18',
     assignee: 'You',
     type: 'call',
+    phone: '+1 (555) 123-4567', // Adicionado número de telefone
   },
   {
     id: 2,
@@ -36,6 +38,7 @@ const initialTasks = [
     due: '2023-10-20',
     assignee: 'You',
     type: 'email',
+    phone: '+1 (555) 234-5678', // Adicionado número de telefone
   },
   {
     id: 3,
@@ -46,6 +49,7 @@ const initialTasks = [
     due: '2023-10-25',
     assignee: 'Sarah Johnson',
     type: 'task',
+    phone: '+1 (555) 765-4321', // Adicionado número de telefone
   },
   {
     id: 4,
@@ -56,6 +60,7 @@ const initialTasks = [
     due: '2023-10-15',
     assignee: 'You',
     type: 'research',
+    phone: '', // Sem número de telefone
   },
   {
     id: 5,
@@ -66,6 +71,7 @@ const initialTasks = [
     due: '2023-10-19',
     assignee: 'David Kim',
     type: 'meeting',
+    phone: '+1 (555) 567-8901', // Adicionado número de telefone
   },
 ];
 
@@ -93,6 +99,7 @@ const Tasks = () => {
         due: '',
         assignee: 'You',
         type: 'task',
+        phone: '', // Sem número de telefone para nova tarefa
       };
       setTasks([...tasks, newTaskObj]);
       setNewTask('');
@@ -126,6 +133,86 @@ const Tasks = () => {
         return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>;
     }
   };
+
+  const handleWhatsAppClick = (phone: string) => {
+    if (!phone) {
+      toast({
+        title: "Erro",
+        description: "Não há número de telefone disponível para esta tarefa",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Remove non-numeric characters from phone number
+    const formattedPhone = phone.replace(/\D/g, '');
+    // Open WhatsApp link in a new tab
+    window.open(`https://wa.me/${formattedPhone}`, '_blank');
+    
+    toast({
+      title: "WhatsApp",
+      description: `Abrindo WhatsApp para ${phone}`,
+    });
+  };
+
+  const renderTaskItem = (task: any) => (
+    <div
+      key={task.id}
+      className={cn(
+        "flex items-start space-x-4 p-3 rounded-md border hover:bg-muted/50 transition-colors",
+        task.completed && "bg-muted/20"
+      )}
+    >
+      <Checkbox
+        checked={task.completed}
+        onCheckedChange={() => handleTaskToggle(task.id)}
+        className="mt-1"
+      />
+      <div className="flex-1 space-y-1">
+        <div className="flex items-center justify-between">
+          <p className={cn("font-medium", task.completed && "line-through text-muted-foreground")}>
+            {task.title}
+          </p>
+          <div className="flex items-center gap-2">
+            {task.phone && (
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="h-7 w-7 bg-green-500 hover:bg-green-600 text-white"
+                onClick={() => handleWhatsAppClick(task.phone)}
+                title="Enviar mensagem via WhatsApp"
+              >
+                <MessageSquare className="h-3.5 w-3.5" />
+                <span className="sr-only">WhatsApp</span>
+              </Button>
+            )}
+            <span className={cn("text-xs px-2 py-1 rounded-full", getPriorityStyles(task.priority))}>
+              {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+            </span>
+          </div>
+        </div>
+        {task.description && (
+          <p className="text-sm text-muted-foreground">{task.description}</p>
+        )}
+        <div className="flex items-center space-x-4 pt-2">
+          <div className="flex items-center text-xs text-muted-foreground">
+            {getTypeIcon(task.type)}
+            <span>{task.type.charAt(0).toUpperCase() + task.type.slice(1)}</span>
+          </div>
+          {task.due && (
+            <div className="flex items-center text-xs text-muted-foreground">
+              <CalendarRange className="h-4 w-4 mr-1" />
+              <span>{new Date(task.due).toLocaleDateString()}</span>
+            </div>
+          )}
+          <div className="flex items-center text-xs text-muted-foreground">
+            <User className="h-4 w-4 mr-1" />
+            <span>{task.assignee}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -188,50 +275,7 @@ const Tasks = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {tasks.map((task) => (
-                  <div
-                    key={task.id}
-                    className={cn(
-                      "flex items-start space-x-4 p-3 rounded-md border hover:bg-muted/50 transition-colors",
-                      task.completed && "bg-muted/20"
-                    )}
-                  >
-                    <Checkbox
-                      checked={task.completed}
-                      onCheckedChange={() => handleTaskToggle(task.id)}
-                      className="mt-1"
-                    />
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <p className={cn("font-medium", task.completed && "line-through text-muted-foreground")}>
-                          {task.title}
-                        </p>
-                        <span className={cn("text-xs px-2 py-1 rounded-full", getPriorityStyles(task.priority))}>
-                          {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
-                        </span>
-                      </div>
-                      {task.description && (
-                        <p className="text-sm text-muted-foreground">{task.description}</p>
-                      )}
-                      <div className="flex items-center space-x-4 pt-2">
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          {getTypeIcon(task.type)}
-                          <span>{task.type.charAt(0).toUpperCase() + task.type.slice(1)}</span>
-                        </div>
-                        {task.due && (
-                          <div className="flex items-center text-xs text-muted-foreground">
-                            <CalendarRange className="h-4 w-4 mr-1" />
-                            <span>{new Date(task.due).toLocaleDateString()}</span>
-                          </div>
-                        )}
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <User className="h-4 w-4 mr-1" />
-                          <span>{task.assignee}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                {tasks.map(renderTaskItem)}
               </div>
             </CardContent>
           </Card>
@@ -259,47 +303,7 @@ const Tasks = () => {
               <div className="space-y-4">
                 {tasks
                   .filter(task => task.completed)
-                  .map((task) => (
-                    <div
-                      key={task.id}
-                      className="flex items-start space-x-4 p-3 rounded-md border bg-muted/20 hover:bg-muted/50 transition-colors"
-                    >
-                      <Checkbox
-                        checked={task.completed}
-                        onCheckedChange={() => handleTaskToggle(task.id)}
-                        className="mt-1"
-                      />
-                      <div className="flex-1 space-y-1">
-                        <div className="flex items-center justify-between">
-                          <p className="font-medium line-through text-muted-foreground">
-                            {task.title}
-                          </p>
-                          <span className={cn("text-xs px-2 py-1 rounded-full", getPriorityStyles(task.priority))}>
-                            {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
-                          </span>
-                        </div>
-                        {task.description && (
-                          <p className="text-sm text-muted-foreground">{task.description}</p>
-                        )}
-                        <div className="flex items-center space-x-4 pt-2">
-                          <div className="flex items-center text-xs text-muted-foreground">
-                            {getTypeIcon(task.type)}
-                            <span>{task.type.charAt(0).toUpperCase() + task.type.slice(1)}</span>
-                          </div>
-                          {task.due && (
-                            <div className="flex items-center text-xs text-muted-foreground">
-                              <CalendarRange className="h-4 w-4 mr-1" />
-                              <span>{new Date(task.due).toLocaleDateString()}</span>
-                            </div>
-                          )}
-                          <div className="flex items-center text-xs text-muted-foreground">
-                            <User className="h-4 w-4 mr-1" />
-                            <span>{task.assignee}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                  .map(renderTaskItem)}
               </div>
             </CardContent>
           </Card>
