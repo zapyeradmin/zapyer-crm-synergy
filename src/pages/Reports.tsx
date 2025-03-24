@@ -114,14 +114,14 @@ const Reports = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-4">
-              <div className="h-[400px] w-full">
+              <div className="h-[300px] w-full">
                 <ChartContainer
                   config={{
                     vendas: { label: 'Vendas', color: '#8B5CF6' },
                     meta: { label: 'Meta', color: '#F97316' },
                   }}
                 >
-                  <BarChart data={salesData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                  <BarChart data={salesData} margin={{ top: 10, right: 10, left: 10, bottom: 30 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="month" />
                     <YAxis />
@@ -212,15 +212,15 @@ const Reports = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-4">
-              <div className="h-[400px] w-full">
+              <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <PieChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                  <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                     <Pie
                       data={leadSourceData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      outerRadius={150}
+                      outerRadius={100}
                       fill="#8884d8"
                       dataKey="value"
                       label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
@@ -274,13 +274,13 @@ const Reports = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-4">
-              <div className="h-[400px] w-full">
+              <div className="h-[300px] w-full">
                 <ChartContainer
                   config={{
                     taxa: { label: 'Taxa de Conversão', color: '#8B5CF6' },
                   }}
                 >
-                  <LineChart data={performanceData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                  <LineChart data={performanceData} margin={{ top: 10, right: 10, left: 10, bottom: 30 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="name" />
                     <YAxis unit="%" />
@@ -291,8 +291,8 @@ const Reports = () => {
                       dataKey="taxa" 
                       stroke="var(--color-taxa)" 
                       strokeWidth={3}
-                      dot={{ r: 6 }}
-                      activeDot={{ r: 8 }}
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
                     />
                   </LineChart>
                 </ChartContainer>
