@@ -99,7 +99,7 @@ const Reports = () => {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
+        <TabsList className="grid w-full grid-cols-3 mb-4">
           <TabsTrigger value="vendas">Vendas e Metas</TabsTrigger>
           <TabsTrigger value="origens">Origens de Leads</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
@@ -107,26 +107,26 @@ const Reports = () => {
 
         <TabsContent value="vendas" className="space-y-6">
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-2">
               <CardTitle>Vendas vs. Metas</CardTitle>
               <CardDescription>
                 Comparativo entre vendas realizadas e metas definidas nos últimos 6 meses.
               </CardDescription>
             </CardHeader>
-            <CardContent className="pt-4">
-              <div className="h-[300px] w-full">
+            <CardContent>
+              <div className="h-[280px] w-full mt-0">
                 <ChartContainer
                   config={{
                     vendas: { label: 'Vendas', color: '#8B5CF6' },
                     meta: { label: 'Meta', color: '#F97316' },
                   }}
                 >
-                  <BarChart data={salesData} margin={{ top: 10, right: 10, left: 10, bottom: 30 }}>
+                  <BarChart data={salesData} margin={{ top: 5, right: 5, left: 5, bottom: 20 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="month" />
                     <YAxis />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <Legend />
+                    <Legend wrapperStyle={{ paddingTop: 0 }} />
                     <Bar dataKey="vendas" fill="var(--color-vendas)" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="meta" fill="var(--color-meta)" radius={[4, 4, 0, 0]} />
                   </BarChart>
@@ -205,22 +205,22 @@ const Reports = () => {
 
         <TabsContent value="origens" className="space-y-6">
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-2">
               <CardTitle>Origens de Leads</CardTitle>
               <CardDescription>
                 Distribuição de leads por canal de origem.
               </CardDescription>
             </CardHeader>
-            <CardContent className="pt-4">
-              <div className="h-[300px] w-full">
+            <CardContent>
+              <div className="h-[280px] w-full mt-0">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                     <Pie
                       data={leadSourceData}
                       cx="50%"
-                      cy="50%"
+                      cy="45%"
                       labelLine={false}
-                      outerRadius={100}
+                      outerRadius={90}
                       fill="#8884d8"
                       dataKey="value"
                       label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
@@ -267,25 +267,25 @@ const Reports = () => {
 
         <TabsContent value="performance" className="space-y-6">
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-2">
               <CardTitle>Taxa de Conversão</CardTitle>
               <CardDescription>
                 Percentual de leads convertidos em clientes ao longo do tempo.
               </CardDescription>
             </CardHeader>
-            <CardContent className="pt-4">
-              <div className="h-[300px] w-full">
+            <CardContent>
+              <div className="h-[280px] w-full mt-0">
                 <ChartContainer
                   config={{
                     taxa: { label: 'Taxa de Conversão', color: '#8B5CF6' },
                   }}
                 >
-                  <LineChart data={performanceData} margin={{ top: 10, right: 10, left: 10, bottom: 30 }}>
+                  <LineChart data={performanceData} margin={{ top: 5, right: 5, left: 5, bottom: 20 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="name" />
                     <YAxis unit="%" />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <Legend />
+                    <Legend wrapperStyle={{ paddingTop: 0 }} />
                     <Line 
                       type="monotone" 
                       dataKey="taxa" 
