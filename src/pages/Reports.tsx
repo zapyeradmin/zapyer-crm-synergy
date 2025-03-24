@@ -113,19 +113,19 @@ const Reports = () => {
                 Comparativo entre vendas realizadas e metas definidas nos últimos 6 meses.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="h-80">
+            <CardContent className="pt-4">
+              <div className="h-[400px] w-full">
                 <ChartContainer
                   config={{
                     vendas: { label: 'Vendas', color: '#8B5CF6' },
                     meta: { label: 'Meta', color: '#F97316' },
                   }}
                 >
-                  <BarChart data={salesData}>
+                  <BarChart data={salesData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="month" />
                     <YAxis />
-                    <Tooltip content={<ChartTooltipContent />} />
+                    <ChartTooltip content={<ChartTooltipContent />} />
                     <Legend />
                     <Bar dataKey="vendas" fill="var(--color-vendas)" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="meta" fill="var(--color-meta)" radius={[4, 4, 0, 0]} />
@@ -211,16 +211,16 @@ const Reports = () => {
                 Distribuição de leads por canal de origem.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="h-80">
+            <CardContent className="pt-4">
+              <div className="h-[400px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
+                  <PieChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                     <Pie
                       data={leadSourceData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      outerRadius={120}
+                      outerRadius={150}
                       fill="#8884d8"
                       dataKey="value"
                       label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
@@ -230,7 +230,7 @@ const Reports = () => {
                       ))}
                     </Pie>
                     <Tooltip />
-                    <Legend />
+                    <Legend layout="horizontal" verticalAlign="bottom" align="center" />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -273,18 +273,18 @@ const Reports = () => {
                 Percentual de leads convertidos em clientes ao longo do tempo.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="h-80">
+            <CardContent className="pt-4">
+              <div className="h-[400px] w-full">
                 <ChartContainer
                   config={{
                     taxa: { label: 'Taxa de Conversão', color: '#8B5CF6' },
                   }}
                 >
-                  <LineChart data={performanceData}>
+                  <LineChart data={performanceData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="name" />
                     <YAxis unit="%" />
-                    <Tooltip content={<ChartTooltipContent />} />
+                    <ChartTooltip content={<ChartTooltipContent />} />
                     <Legend />
                     <Line 
                       type="monotone" 
